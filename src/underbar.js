@@ -96,12 +96,29 @@
 
   // Return all elements of an array that don't pass a truth test.
   _.reject = function(collection, test) {
+    var newArr = _.filter(collection, function(element){
+        if (!test(element)){
+          return element;
+        }
+      })
+
+    return newArr;
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
   };
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
+      var dict = {};
+      var newArray = [];
+      for (var j=0; j<array.length; j++){
+        if (!dict[element]){
+          dict[element]=1;
+          newArray.push(element);
+        }
+      };
+      console.log(newArray);  //did not log in console at all.
+      return newArray;
   };
 
 
@@ -110,6 +127,11 @@
     // map() is a useful primitive iteration function that works a lot
     // like each(), but in addition to running the operation on all
     // the members, it also maintains an array of results.
+    var newArray = [];
+    for (var i = 0; i<collection.length; i++){
+      newArray[i]=iterator(collection[i]);
+    }
+    return newArray;
   };
 
   /*
