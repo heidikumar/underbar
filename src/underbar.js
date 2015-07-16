@@ -109,16 +109,15 @@
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
-      var dict = {};
-      var newArray = [];
-      for (var j=0; j<array.length; j++){
-        if (!dict[element]){
-          dict[element]=1;
-          newArray.push(element);
-        }
-      };
-      console.log(newArray);  //did not log in console at all.
-      return newArray;
+    var newArray = [];
+    var dict={};
+    for (var i=0; i<array.length; i++){
+      if(!dict[array[i]]){
+        dict[array[i]]=1;
+        newArray.push(array[i]);
+      }
+    };
+    return newArray;
   };
 
 
@@ -173,6 +172,14 @@
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
+      var total = accumulator;
+      if (total === undefined){
+         total = collection.shift();
+      }
+      _.each(collection, function(element){
+        total = iterator(total, element);
+      })
+      return total;
   };
 
   // Determine if the array or object contains a given value (using `===`).
