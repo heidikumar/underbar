@@ -199,13 +199,14 @@
   _.every = function(collection, iterator) { 
     var ans = true;
     _.each(collection, function(element){
-        if (iterator(element) == false){
-          ans = false;
-        }
-        if (Boolean(element) == false){
-          ans = false;
-        }
-        if (element === undefined){
+        if (iterator == _.identity || iterator === undefined){
+           if (Boolean(element) == false){
+              ans = false;
+            }
+            if (element === undefined){
+              ans = false;
+            }
+        } else if (iterator(element) == false){
           ans = false;
         }
       });
@@ -239,6 +240,13 @@
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
+    var newObj = {};
+    _.each(assignments, function(ownObj){     //each of the elements is its own object
+      _.each(ownObj, function(collKey, key){
+        newObj[key] = collKey;
+      });
+    });
+    return obj;
   };
 
   // Like extend, but doesn't ever overwrite a key that already
