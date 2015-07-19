@@ -253,20 +253,28 @@
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
-    var newObj = {};
-    _.each(assignments, function(ownObj){     //each of the elements is its own object
-      _.each(ownObj, function(collKey, key){
-        newObj[key] = collKey;
-      });
-    });
-    return obj;
+    var newObj = obj;
+    _.each(arguments, function(eachObj){
+      _.each(eachObj, function(value, key){
+        newObj[key] = value;
+      })
+    })
+    return newObj;
   };
 
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
+    var newObj = obj;
+    _.each(arguments, function(eachObj){
+      _.each(eachObj, function(value, key){
+        if (newObj[key]==null){
+        newObj[key] = value;
+        } 
+      })
+    })
+    return newObj;
   };
-
 
   /**
    * FUNCTIONS
