@@ -336,6 +336,17 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
+    var start = Date().getTime();
+    var compareTime = function(){
+      var now = Date().getTime();
+      var diff = now-start;
+      if (diff >= wait){
+        return func.apply(this, arguments);
+      } else {
+        compareTime();
+      }
+    };
+    compareTime();    //This doesn't work as the call stack gets too big.
   };
 
 
