@@ -316,6 +316,17 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+    var dict = {};
+    return function(){
+      var args = Array.prototype.slice.call(arguments);
+
+      if (dict.hasOwnProperty(args)){
+        return dict[args];
+      } else {
+        dict[args] = func.apply(this, arguments);
+        return dict[args];
+      }
+    };
   };
 
   // Delays a function for the given number of milliseconds, and then calls
