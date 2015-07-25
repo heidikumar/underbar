@@ -336,17 +336,18 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
-    var start = Date().getTime();
-    var compareTime = function(){
-      var now = Date().getTime();
-      var diff = now-start;
-      if (diff >= wait){
-        return func.apply(this, arguments);
-      } else {
-        compareTime();
-      }
-    };
-    compareTime();    //This doesn't work as the call stack gets too big.
+    /*var start = Date.prototype.getTime();     THIS DIDN'T WORK B/C DATE.PROTOTYPE NOT RETURNING CORRECTLY
+    var now = Date.prototype.getTime();
+    var diff = now-start;
+    while(diff<wait){
+      now = Date.prototype.getTime();
+      diff = now-start;
+    }
+    return func.apply(this,arguments);*/
+
+    var args = Array.prototype.slice.call(arguments, 2);
+    window.setTimeout(function(){func.apply(this, args)}, wait); //I don't think we're supposed to use setTimeOut, but I couldn't get Date to give time.
+
   };
 
 
